@@ -52,6 +52,7 @@ class Yunite(apiKey: String, guildId: Long) {
             return cachedUsers[discordId]!!
         }
         val query = registrationService.singleUserLink(discordId).execute()
+        if (query.body()!!.epicID == null) return null
         cachedUsers[discordId] = query.body()!!.epicID
         return query.body()!!.epicID
     }
@@ -61,6 +62,7 @@ class Yunite(apiKey: String, guildId: Long) {
             return cachedUsers.inverse()[epicId]!!
         }
         val query = registrationService.singleUserLink(epicId).execute()
+        if (query.body()!!.discordID == null) return null
         cachedUsers.inverse()[epicId] = query.body()!!.discordID!!.toLong()
         return query.body()!!.discordID?.toLong()
     }
