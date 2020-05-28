@@ -47,22 +47,22 @@ class Yunite(apiKey: String, guildId: Long) {
         }
     }
 
-    operator fun get(discordId: Long): String {
+    operator fun get(discordId: Long): String? {
         if (cachedUsers.containsKey(discordId)) {
             return cachedUsers[discordId]!!
         }
         val query = registrationService.singleUserLink(discordId).execute()
         cachedUsers[discordId] = query.body()!!.epicID
-        return query.body()!!.epicID!!
+        return query.body()!!.epicID
     }
 
-    operator fun get(epicId: String): Long {
+    operator fun get(epicId: String): Long? {
         if (cachedUsers.containsValue(epicId)) {
             return cachedUsers.inverse()[epicId]!!
         }
         val query = registrationService.singleUserLink(epicId).execute()
         cachedUsers.inverse()[epicId] = query.body()!!.discordID!!.toLong()
-        return query.body()!!.discordID!!.toLong()
+        return query.body()!!.discordID?.toLong()
     }
 
 }
