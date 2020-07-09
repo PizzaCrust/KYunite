@@ -16,11 +16,7 @@ interface BlockService {
               @Query("blockLinkedAccount") blockedLinkedAccount: Boolean = false,
               @Query("reason", encoded = true) reason: String): Call<BlockResponse>
 
-    fun block(id: Long, blockedLinkedAccount: Boolean = false, reason: String): Call<BlockResponse> = block("$id", blockedLinkedAccount, reason)
-
     @DELETE("v1/servers/GUILD_ID/regsys/user/{USER_ID}/block")
     fun unblock(@Path("USER_ID") id: String): Call<BlockResponse>
-
-    fun unblock(id: Long): Call<BlockResponse> = unblock("$id")
 
 }
